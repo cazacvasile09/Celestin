@@ -15,11 +15,6 @@ namespace Celestin.API.Repositories
             ctx = _ctx;
         }
 
-        public void AddNewCelestin(DbModels.Celestin newCelestin)
-        {
-            ctx.Celestin.Add(newCelestin);
-        }
-
         public DbModels.Celestin GetCelestin(int id, bool includeDiscovery)
         {
             if (includeDiscovery)
@@ -38,18 +33,6 @@ namespace Celestin.API.Repositories
         public IEnumerable<DbModels.Celestin> GetCelestinsByName(string name)
         {
             return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.Name.ToLower().Contains(name.ToLower())).ToList();
-        }
-
-
-        public IEnumerable<DbModels.Celestin> GetCelestinsByCountryName(string countryName)
-        {
-            return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.DiscoverySource.StateOwner.ToLower().Equals(countryName.ToLower())).ToList();
-        }
-
-        public string CountryWithMostDiscoveredBlackHoles(List<DbModels.Celestin> blackHoleCelestins)
-        {
-            var country = blackHoleCelestins.GroupBy(x => x.DiscoverySource.StateOwner).OrderByDescending(g => g.Count()).Select(g => g.Key).FirstOrDefault();
-            return country;
         }
 
         public bool Save()

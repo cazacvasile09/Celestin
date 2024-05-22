@@ -64,27 +64,6 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
-        [Route("countryName")]
-        [HttpGet]
-        public IActionResult GetCelestinsByCountryName(string countryName)
-        {
-            if (String.IsNullOrEmpty(countryName))
-            {
-                ModelState.AddModelError(
-                   "Errors",
-                   "Provide a valid country name!");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var celestins = celestinRepository.GetCelestinsByCountryName(countryName);
-
-            return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
-        }
-
         [Route("GetCelestinsByType")]
         [HttpGet]
         public IActionResult GetCelestinsByType(string type)
@@ -104,46 +83,6 @@ namespace Celestin.API.Controllers
             var celestins = factory.GetCelestins(type);
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
-        }
-
-        [Route("CountryWithMostDiscoveredBlackHoles")]
-        [HttpGet]
-        public IActionResult CountryWithMostDiscoveredBlackHoles()
-        {
-            var blackHoles = factory.GetCelestins(Commons.BlackHole);
-
-            var countryName = celestinRepository.CountryWithMostDiscoveredBlackHoles(blackHoles);
-
-            return Ok(new { countryName = countryName });
-        }
-
-        [HttpPost]
-        public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
-        {
-            if (!discoveryRepository.ExistDiscovery(celestin.DiscoverySourceId))
-            {
-                ModelState.AddModelError(
-                    "DiscoverySource",
-                    "The provided DiscoverySourceId does not exist!");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
-
-            celestinRepository.AddNewCelestin(newCelestin);
-
-            celestinRepository.Save();
-
-            var createdCelestin = mapper.Map<CelestinWithoutDiscoveryDto>(newCelestin);
-
-            return CreatedAtRoute(
-                "GetCelestin",
-                new { createdCelestin.Id },
-                createdCelestin);
         }
     }
 }
