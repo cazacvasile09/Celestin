@@ -3,8 +3,76 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@* 
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <script src="./js/site.js"></script>
+
+<h1>Index</h1>
+<nav>
+    <ul>
+        <li>
+            <a href="pages/list.html">List</a>
+        </li>
+        <li>
+            <a href="pages/view-details.html">Add item</a>
+        </li>
+        <li>
+            <a href="pages/about.html">About</a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>
+ *@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='./css/style-variables.css'>
+    <link rel='stylesheet' href='./css/style-nav.css'>
+    <link rel='stylesheet' href='./css/index-style.css'>
+    <link rel='stylesheet' href='./css/style-base.css'>
+    <link rel='stylesheet' href='./css/style-table.css'>
+    @* <link rel='stylesheet' href='./css/style-select.css'> *@
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <script src="./js/index.js"></script>
+    <div id='navbar'></div>
+    <div class='container'>
+        <h1>List</h1>
+        <div class="loader" id='loader-container'></div>
+
+        <div id="dynamic-content-container">
+            <div class="search-container">
+                <label for="searchSelect">Filter column:</label>
+                <div@*  class="custom-select" *@>
+                    <select name="searchSelect" id="searchSelect">
+                        <option value="/GetCelestinsByName?name">Name</option>
+                        <option value="/GetCelestinsByType?type">Type</option>
+                    </select>
+                </div>
+                <div class="div-line"></div>
+                <div class="search-input-container">
+                    <i class="fa fa-search icon my-search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
+                </div>
+                <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
+            </div>
+            <div id="table"></div>
+        </div>
+    </div>
+</body>
+</html>

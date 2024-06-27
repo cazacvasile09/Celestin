@@ -1,0 +1,14 @@
+:root {
+  --primary-dark-color-active: #344e41;
+  --primary-light-color-focus: #1d2e20;
+  --primary-light-color-active: #588157;
+  --primary-light-color-inactive: #dad7cd;
+  --primary-dark-color-inactive: #a3b18a;
+  --color-input-enabled: whitesmoke;
+}
+
+p,
+body {
+  font-family: Arial, sans-serif;
+  font-size: medium;
+}

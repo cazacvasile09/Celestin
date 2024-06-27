@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar ul {
+  list-style-type: none;
+}
+.navbar ul li {
+  display: inline;
+}
+.navbar {
+  background-color: var(--primary-dark-color-active);
+  padding: 10px;
+  border: 2px solid var(--primary-light-color-focus);
+}
+.navbar a {
+  color: var(--color-input-enabled);
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+.navbar a:hover,
+.navbar a:active {
+  background-color: var(--primary-light-color-focus);
+}
+
+.active {
+  background-color: var(--primary-light-color-active);
+}

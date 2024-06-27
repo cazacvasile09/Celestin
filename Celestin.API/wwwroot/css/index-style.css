@@ -1,0 +1,63 @@
+body {
+  font-family: sans-serif;
+}
+
+.item {
+  background-color: var(--primary-light-color-inactive);
+  border: 1px solid var(--primary-light-color-focus);
+  box-shadow: 0 5px 10px var(--primary-light-color-focus);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+#searchInput {
+  height: 32px;
+  width: 300px;
+  border: 0px ;
+  font-size: 13px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.search-container{
+  display: flex;
+  gap: 5px;
+  border: 1px solid var(--primary-light-color-focus);
+  border-radius: 10px;
+  padding: 5px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#searchInput:focus, 
+#searchInput:focus{
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.search-input-container {
+  height: 36px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+  display: flex;
+  border: 1px solid var(--primary-dark-color-inactive);
+  border-radius: 10px;
+  align-items: center;
+  padding: 5px;
+  gap:5px;
+}
+
+.my-search-icon{
+  color: var(--primary-dark-color-inactive);
+}
+
+.div-line {
+  width: 1px;
+  background: var(--primary-light-color-focus);
+  height: 32px;
+}

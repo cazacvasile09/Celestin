@@ -1,0 +1,15 @@
+
+  select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 5px;
+    background-color: var(--color-input-enabled);
+    border: 1px solid var(--primary-dark-color-inactive);
+    border-radius: 0.25rem;
+    color: var(--primary-light-color-focus);
+    cursor: pointer;
+  }

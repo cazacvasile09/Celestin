@@ -50,8 +50,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(celestin));
         }
 
-        //[Route("name")]
-        [HttpGet("name/{name}")]
+        [Route("GetCelestinsByName")]
         public IActionResult GetCelestinsByName(string name)
         {
             if (!ModelState.IsValid)
@@ -83,6 +82,35 @@ namespace Celestin.API.Controllers
             var celestins = factory.GetCelestins(type);
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
+        }
+
+        [HttpPost]
+        public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
+        {
+            if (!discoveryRepository.ExistDiscovery(celestin.DiscoverySourceId))
+            {
+                ModelState.AddModelError(
+                    "DiscoverySource",
+                    "The provided DiscoverySourceId does not exist!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
+
+            //celestinRepository.AddNewCelestin(newCelestin);
+
+            celestinRepository.Save();
+
+            var createdCelestin = mapper.Map<CelestinWithoutDiscoveryDto>(newCelestin);
+
+            return CreatedAtRoute(
+                "GetCelestin",
+                new { createdCelestin.Id },
+                createdCelestin);
         }
     }
 }
