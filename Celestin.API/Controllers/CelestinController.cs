@@ -5,6 +5,7 @@ using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Celestin.API.Controllers
 {
@@ -84,6 +85,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+        [Route("CelestinForCreationDto")]
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
         {
@@ -101,7 +103,7 @@ namespace Celestin.API.Controllers
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
 
-            //celestinRepository.AddNewCelestin(newCelestin);
+            celestinRepository.AddNewCelestin(newCelestin);
 
             celestinRepository.Save();
 
@@ -111,6 +113,36 @@ namespace Celestin.API.Controllers
                 "GetCelestin",
                 new { createdCelestin.Id },
                 createdCelestin);
+
+        }
+
+        [Route("CelestinForUpdateDto")]
+        [HttpPut]
+
+        public IActionResult UpdateCelestin(int id, [FromBody] CelestinForUpdateDto celestinUpdate)
+        {
+            var existingCelestin = celestinRepository.GetCelestin(id, false);
+            if (existingCelestin == null)
+            {
+                return NotFound();
+            }
+
+            //mapper.Map(celestinUpdate, existingCelestin);
+
+            //Eroare pe mapper. 
+
+            existingCelestin.SurfaceTemperature = celestinUpdate.SurfaceTemperature;
+            existingCelestin.EquatorialDiameter = Convert.ToDouble(celestinUpdate.EquatorialDiameter);
+            
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            celestinRepository.UpdateCelestin(existingCelestin);
+
+            return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
         }
     }
 }
