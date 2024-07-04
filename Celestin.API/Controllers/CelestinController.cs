@@ -63,7 +63,10 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+
         [Route("GetCelestinsByType")]
+        
+        
         [HttpGet]
         public IActionResult GetCelestinsByType(string type)
         {
@@ -84,6 +87,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+        [Route("CreateCelestin")] //trebuie sa punem o ruta noua
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
         {
@@ -101,7 +105,7 @@ namespace Celestin.API.Controllers
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
 
-            //celestinRepository.AddNewCelestin(newCelestin);
+            celestinRepository.AddNewCelestin(newCelestin); //apelam metoda de creare de nou obiect
 
             celestinRepository.Save();
 
