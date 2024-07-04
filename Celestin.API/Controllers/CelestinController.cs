@@ -84,6 +84,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+        [Route("CelestinForCreationDto")]
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
         {
@@ -101,7 +102,7 @@ namespace Celestin.API.Controllers
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
 
-            //celestinRepository.AddNewCelestin(newCelestin);
+            celestinRepository.AddNewCelestin(newCelestin);
 
             celestinRepository.Save();
 

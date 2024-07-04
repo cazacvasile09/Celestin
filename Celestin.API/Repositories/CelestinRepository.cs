@@ -35,9 +35,15 @@ namespace Celestin.API.Repositories
             return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.Name.ToLower().Contains(name.ToLower())).ToList();
         }
 
+        public void AddNewCelestin(DbModels.Celestin newCelestin) 
+        {
+            ctx.Add(newCelestin);
+        }
+
         public bool Save()
         {
             return (ctx.SaveChanges() >= 0);
         }
+
     }
 }
