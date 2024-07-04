@@ -39,5 +39,14 @@ namespace Celestin.API.Repositories
         {
             return (ctx.SaveChanges() >= 0);
         }
+        public void AddNewCelestin(DbModels.Celestin celestin)
+        {
+            ctx.Celestin.Add(celestin);
+        }
+        public void UpdateCelestin(DbModels.Celestin celestin)
+        {
+            ctx.Celestin.Update(celestin);
+        }
+        
     }
 }

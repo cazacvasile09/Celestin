@@ -83,7 +83,7 @@ namespace Celestin.API.Controllers
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
-
+        [Route("CelestinForCreationDto")]
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
         {
@@ -112,5 +112,46 @@ namespace Celestin.API.Controllers
                 new { createdCelestin.Id },
                 createdCelestin);
         }
+        [Route("CelestinForUpdateDto")]
+        [HttpPut("{id}")]
+        public IActionResult UpdateCelestin(int id, [FromBody] CelestinForUpdateDto celestin)
+        {
+            if (celestin == null)
+            {
+                return BadRequest();
+            }
+
+            if (!discoveryRepository.ExistDiscovery(celestin.DiscoverySourceId))
+            {
+                ModelState.AddModelError(
+                    "DiscoverySource",
+                    "The provided DiscoverySourceId does not exist!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingCelestin = celestinRepository.GetCelestin(id, includeDiscovery: true);
+            if (existingCelestin == null)
+            {
+                return NotFound();
+            }
+
+            mapper.Map(celestin, existingCelestin);
+
+            celestinRepository.UpdateCelestin(existingCelestin);
+
+            if(!celestinRepository.Save())
+            {
+                throw new Exception("Updating a celestin failed on save.");
+
+            }
+
+            return NoContent();
+        }
+    
+
     }
 }

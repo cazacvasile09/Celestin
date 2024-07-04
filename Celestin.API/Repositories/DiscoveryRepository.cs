@@ -17,5 +17,6 @@ namespace Celestin.API.Repositories
         {
             return ctx.DiscoverySource.Any(x => x.Id == id);
         }
+
     }
 }
