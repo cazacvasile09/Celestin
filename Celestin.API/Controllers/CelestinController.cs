@@ -84,6 +84,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+        [Route("CreateCelestin")]
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
         {
@@ -101,7 +102,7 @@ namespace Celestin.API.Controllers
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
 
-            //celestinRepository.AddNewCelestin(newCelestin);
+            celestinRepository.AddNewCelestin(newCelestin);
 
             celestinRepository.Save();
 
@@ -111,6 +112,66 @@ namespace Celestin.API.Controllers
                 "GetCelestin",
                 new { createdCelestin.Id },
                 createdCelestin);
+        }
+
+        [Route("UpdateCelestin")]
+        [HttpPut]
+        public IActionResult UpdateCelestin([FromBody] CelestinForUpdationDto celestin)
+        {
+            
+            if( celestin == null )
+            {
+                return BadRequest();
+            }
+
+            if( celestin.Id == 0 )
+            {
+                return BadRequest();
+            }
+
+            var recordEntry = celestinRepository.GetCelestin( celestin.Id , false );
+
+            if ( recordEntry == null )
+            {
+                return NotFound();
+            }
+            
+            if( celestin.Name != null && celestin.Name != recordEntry.Name )
+            {
+                recordEntry.Name = celestin.Name;
+            }
+            
+            if (celestin.Mass != 0 && celestin.Mass != recordEntry.Mass)
+            {
+                recordEntry.Mass = celestin.Mass;
+            } 
+            
+            if(celestin.EquatorialDiameter != 0 && celestin.EquatorialDiameter != recordEntry.EquatorialDiameter )
+            {
+                recordEntry.EquatorialDiameter = celestin.EquatorialDiameter;
+            }
+
+            if(celestin.SurfaceTemperature != 0 && celestin.SurfaceTemperature != recordEntry.SurfaceTemperature)
+            {
+                recordEntry.SurfaceTemperature = celestin.SurfaceTemperature; 
+            }
+            
+            if(celestin.DiscoverySourceId != 0 && celestin.DiscoverySourceId != recordEntry.DiscoverySourceId)
+            {
+                recordEntry.DiscoverySourceId = celestin.DiscoverySourceId;
+            }
+
+            if(celestin.DiscoveryDate != DateTime.MinValue && celestin.DiscoveryDate != recordEntry.DiscoveryDate)
+            {
+                recordEntry.DiscoveryDate = celestin.DiscoveryDate;
+            }
+            
+            celestinRepository.UpdateCelestin(recordEntry);
+            celestinRepository.Save();
+
+            return Ok(
+                $"Id : {recordEntry.Id}\n" + $"Name : {recordEntry.Name}\n" + $"Mass : {recordEntry.Mass}\n" + $"EquatorialDiameter : {recordEntry.EquatorialDiameter}\n" + $"SurfaceTemperature : {recordEntry.SurfaceTemperature}\n" + $"DiscoverySourceId : {recordEntry.DiscoverySourceId}\n" + $"DiscoveryDate : {recordEntry.DiscoveryDate}" 
+                );
         }
     }
 }

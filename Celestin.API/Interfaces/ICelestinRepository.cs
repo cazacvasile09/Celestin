@@ -12,5 +12,8 @@ namespace Celestin.API.Interfaces
         IEnumerable<DbModels.Celestin> GetCelestinsByName(string name);
 
         bool Save();
+
+        void AddNewCelestin(DbModels.Celestin celestin);
+        void UpdateCelestin(DbModels.Celestin celestin);
     }
 }
