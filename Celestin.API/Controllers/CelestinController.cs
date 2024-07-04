@@ -113,5 +113,28 @@ namespace Celestin.API.Controllers
                 new { createdCelestin.Id },
                 createdCelestin);
         }
+
+        [Route("CelestinForUdateDto")]
+        [HttpPut]
+        public IActionResult UdateCelestin(int id, [FromBody] CelestinForCreationDto celestinForUpdate) 
+        {
+            var existingCelestin = celestinRepository.GetCelestin(id, false);
+            if (existingCelestin == null) 
+            {
+                return NotFound();
+            }
+
+            mapper.Map(celestinForUpdate, existingCelestin);
+            
+
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest(ModelState);
+            }
+
+            celestinRepository.UpdateCelestin(existingCelestin);
+
+            return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
+        }
     }
 }
