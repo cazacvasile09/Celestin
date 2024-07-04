@@ -10,7 +10,7 @@ namespace Celestin.API.Interfaces
         DbModels.Celestin GetCelestin(int id, bool includeDiscovery);
 
         IEnumerable<DbModels.Celestin> GetCelestinsByName(string name);
-
+        IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country);
         bool Save();
 
         void AddNewCelestin(DbModels.Celestin celestin);

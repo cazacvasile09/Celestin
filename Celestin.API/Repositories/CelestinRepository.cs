@@ -35,6 +35,12 @@ namespace Celestin.API.Repositories
             return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.Name.ToLower().Contains(name.ToLower())).ToList();
         }
 
+        public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country)
+        {
+            string lowerCaseCountry = country.ToLower(); 
+            return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.DiscoverySource.StateOwner.ToLower().Contains(lowerCaseCountry)).ToList();
+        }
+
         public bool Save()
         {
             return (ctx.SaveChanges() >= 0);

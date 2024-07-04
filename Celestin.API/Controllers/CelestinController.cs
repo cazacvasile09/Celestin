@@ -5,6 +5,7 @@ using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Celestin.API.Controllers
 {
@@ -62,6 +63,20 @@ namespace Celestin.API.Controllers
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
+
+        [Route("GetCelestinsByCountry")]
+        [HttpGet]
+        public IActionResult GetCelestinsByCountry(string country)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var celestins = celestinRepository.GetCelestinsByCountry(country);
+            return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
+        }
+
 
         [Route("GetCelestinsByType")]
         [HttpGet]
