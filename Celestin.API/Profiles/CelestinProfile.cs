@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Celestin.API.CelestinClassifier;
 using Celestin.API.Common;
+using Celestin.API.Controllers;
 using Celestin.API.Models.CelestinModels;
 using System;
 using System.Linq.Expressions;
@@ -24,6 +25,7 @@ namespace Celestin.API.Profiles
                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.Name));
 
             CreateMap<CelestinForCreationDto, DbModels.Celestin>();
+            CreateMap<CelestinForUpdateDto, DbModels.Celestin>();
 
         }
 
