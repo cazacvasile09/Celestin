@@ -17,6 +17,8 @@ namespace Celestin.API.Interfaces
 
         IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string countryName);
 
+        void DeleteCelestin(DbModels.Celestin deleteCelestin);
+
         bool Save();
     }
 }

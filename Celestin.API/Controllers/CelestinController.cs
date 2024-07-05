@@ -185,5 +185,17 @@ namespace Celestin.API.Controllers
             }
         }
 
+        [Route("DeleteCelestin")]
+        [HttpDelete]
+
+        public IActionResult DeleteCelestin(int id)
+        {
+            var existingCelestin = celestinRepository.GetCelestin(id, false);
+            celestinRepository.DeleteCelestin(existingCelestin);
+            celestinRepository.Save();
+
+            return Ok("Celestin deleted!");
+        }
+
     }
 }
