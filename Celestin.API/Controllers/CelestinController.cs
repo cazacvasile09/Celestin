@@ -168,6 +168,18 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+        [Route("GetCountryWithMostBlackHoleDiscoveries")]
+        [HttpGet]
+        public IActionResult GetCountryWithMostBlackHoleDiscoveries()
+        {
+            var country = celestinRepository.GetCountryWithMostBlackHoleDiscoveries();
 
+            if (string.IsNullOrEmpty(country))
+            {
+                return NotFound();
+            }
+
+            return Ok(country);
+        }
     }
 }

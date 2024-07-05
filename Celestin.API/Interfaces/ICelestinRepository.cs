@@ -12,6 +12,8 @@ namespace Celestin.API.Interfaces
         IEnumerable<DbModels.Celestin> GetCelestinsByName(string name);
         IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country);
 
+        string GetCountryWithMostBlackHoleDiscoveries();
+
         void AddNewCelestin(DbModels.Celestin celestin);
         void UpdateCelestin(DbModels.Celestin celestin);
 
