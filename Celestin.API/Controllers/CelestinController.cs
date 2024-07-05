@@ -66,8 +66,8 @@ namespace Celestin.API.Controllers
 
 
         [Route("GetCelestinsByType")]
-        
-        
+
+
         [HttpGet]
         public IActionResult GetCelestinsByType(string type)
         {
@@ -150,6 +150,16 @@ namespace Celestin.API.Controllers
 
             //pasul 4:afisam un mesaj de confirmare
             return Ok("Update cu succes!");
+        }
+
+        [Route("DeleteCelestin")]
+        public IActionResult DeleteCelestin(DbModels.Celestin celestin)
+        {
+            var c = celestinRepository.GetCelestin(celestin.Id, false);
+            mapper.Map(celestin, c);
+            celestinRepository.deleteCelestin(c);
+            celestinRepository.Save();
+            return Ok("Obiect sters cu succes!");
         }
     }
 }

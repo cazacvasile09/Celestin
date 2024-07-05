@@ -18,5 +18,7 @@ namespace Celestin.API.Interfaces
         bool Save();
 
         void updateCelestin(DbModels.Celestin c);//functia pentru update la un object deja existent, se va lua dupa id
+
+        void deleteCelestin(DbModels.Celestin c);
     }
 }
