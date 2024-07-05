@@ -141,5 +141,33 @@ namespace Celestin.API.Controllers
 
             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
         }
+
+        [Route("GetCelestinsByCountry")]
+        public IActionResult GetCelestinsByCountry(string country)
+        {
+            if (string.IsNullOrEmpty(country))
+            {
+                return BadRequest("Country name must be provided.");
+            }
+
+            var celestins = celestinRepository.GetCelestinsByCountry(country);
+
+
+            return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
+        }
+        [Route("GetCountryWithMostBlackHoleDiscoveries")]
+        [HttpGet]
+        public IActionResult GetCountryWithMostBlackHoleDiscoveries()
+        {
+            var country = celestinRepository.GetCountryWithMostBlackHoleDiscoveries();
+
+            if (string.IsNullOrEmpty(country))
+            {
+                return NotFound();
+            }
+
+            return Ok(country);
+        }
     }
 }
+
