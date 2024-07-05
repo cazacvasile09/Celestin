@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Celestin.API.Common;
+using Celestin.API.DbModels;
 using Celestin.API.Interfaces;
 using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
@@ -83,7 +84,7 @@ namespace Celestin.API.Controllers
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
-
+        [Route("CelestinForCreationDto")]
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
         {
@@ -101,7 +102,7 @@ namespace Celestin.API.Controllers
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
 
-            //celestinRepository.AddNewCelestin(newCelestin);
+            celestinRepository.AddNewCelestin(newCelestin);
 
             celestinRepository.Save();
 
@@ -112,5 +113,40 @@ namespace Celestin.API.Controllers
                 new { createdCelestin.Id },
                 createdCelestin);
         }
+
+       /* [Route("CelestinForUpdateDto")]*/
+        [HttpPut("{id}")]
+        public IActionResult UpdateCelestin(int id, [FromBody] CelestinForUpdateDto celestinDto)
+        {
+          /*  if (!discoveryRepository.ExistDiscovery(celestinDto.DiscoverySourceId))
+            {
+                ModelState.AddModelError(
+                    "DiscoverySource",
+                    "The provided DiscoverySourceId does not exist!");
+            }*/
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingCelestin = celestinRepository.GetCelestin(id, includeDiscovery: false);
+
+            if (existingCelestin == null)
+            {
+                return NotFound();
+            }
+
+            // Maparea 
+            mapper.Map(celestinDto, existingCelestin);
+
+            celestinRepository.UpdateCelestin(existingCelestin);
+            // celestinRepository.Save();
+
+            //return NoContent();
+            return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
+        }
+
+
     }
 }
