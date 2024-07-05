@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Celestin.API.Common;
+using Celestin.API.DbModels;
 using Celestin.API.Interfaces;
 using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
@@ -101,7 +102,7 @@ namespace Celestin.API.Controllers
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
 
-            //celestinRepository.AddNewCelestin(newCelestin);
+            celestinRepository.AddNewCelestin(newCelestin);
 
             celestinRepository.Save();
 
@@ -121,12 +122,7 @@ namespace Celestin.API.Controllers
                 return BadRequest();
             }
 
-            if (!discoveryRepository.ExistDiscovery(celestin.DiscoverySourceId))
-            {
-                ModelState.AddModelError(
-                    "DiscoverySource",
-                    "The provided DiscoverySourceId does not exist!");
-            }
+           
 
             if (!ModelState.IsValid)
             {
@@ -143,15 +139,7 @@ namespace Celestin.API.Controllers
 
             celestinRepository.UpdateCelestin(existingCelestin);
 
-            if(!celestinRepository.Save())
-            {
-                throw new Exception("Updating a celestin failed on save.");
-
-            }
-
-            return NoContent();
+            return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
         }
-    
-
     }
 }

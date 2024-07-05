@@ -46,6 +46,7 @@ namespace Celestin.API.Repositories
         public void UpdateCelestin(DbModels.Celestin celestin)
         {
             ctx.Celestin.Update(celestin);
+            Save();
         }
         
     }

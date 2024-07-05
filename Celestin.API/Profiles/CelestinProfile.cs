@@ -25,6 +25,7 @@ namespace Celestin.API.Profiles
 
             CreateMap<CelestinForCreationDto, DbModels.Celestin>();
 
+            CreateMap<CelestinForUpdateDto, DbModels.Celestin>();
         }
 
         private string GetCelestinType(DbModels.Celestin item)

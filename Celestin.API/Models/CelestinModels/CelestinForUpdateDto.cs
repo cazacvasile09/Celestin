@@ -13,9 +13,10 @@ namespace Celestin.API.Models.CelestinModels
 
         public int SurfaceTemperature { get; set; }
 
+        [Required]
         public DateTime DiscoveryDate { get; set; }
 
-        public int DiscoverySourceId { get; set; }
+        
     }
 
 }
