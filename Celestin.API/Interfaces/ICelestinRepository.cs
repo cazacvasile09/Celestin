@@ -15,6 +15,7 @@ namespace Celestin.API.Interfaces
         void AddNewCelestin(DbModels.Celestin celestin);
         void UpdateCelestin(DbModels.Celestin celestin);
         string GetCountryWithMostBlackHoleDiscoveries();
+        void DeleteCelestin(DbModels.Celestin celestin);
 
 
 

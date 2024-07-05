@@ -86,7 +86,10 @@ namespace Celestin.API.Repositories
         {
             return (ctx.SaveChanges() >= 0);
         }
-         
 
+        public void DeleteCelestin(DbModels.Celestin celestin)
+        {
+            ctx.Celestin.Remove(celestin);
+        }
     }
 }
