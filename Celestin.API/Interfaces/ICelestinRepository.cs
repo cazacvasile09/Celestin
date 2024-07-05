@@ -16,7 +16,7 @@ namespace Celestin.API.Interfaces
 
         void AddNewCelestin(DbModels.Celestin celestin);
         void UpdateCelestin(DbModels.Celestin celestin);
-
+        void DeleteCelestin(DbModels.Celestin celestin);
         bool Save();
         
     }

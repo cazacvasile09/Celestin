@@ -51,6 +51,11 @@ namespace Celestin.API.Repositories
             ctx.Celestin.Update(celestin);
             Save();
         }
+        public void DeleteCelestin(DbModels.Celestin celestin)
+        {
+            ctx.Celestin.Remove(celestin);
+            Save();
+        }
         public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country)
         {
             return ctx.Celestin.Include(c => c.DiscoverySource)
