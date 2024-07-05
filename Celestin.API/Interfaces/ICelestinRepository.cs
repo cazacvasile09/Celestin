@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Celestin.API.Interfaces
 {
@@ -14,6 +15,10 @@ namespace Celestin.API.Interfaces
         void AddNewCelestin(DbModels.Celestin newCelestin);
 
         void UpdateCelestin(DbModels.Celestin updateCelestin);
+
+        void DeleteCelestin(DbModels.Celestin deleteCelestin);
+
+        IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string countryName);
 
         bool Save();
     }
