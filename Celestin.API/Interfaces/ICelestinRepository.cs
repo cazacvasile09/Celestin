@@ -13,8 +13,11 @@ namespace Celestin.API.Interfaces
 
         void AddNewCelestin(DbModels.Celestin newCelestin);
 
-        void UpdateCelestin(DbModels.Celestin updateForCelestin);
+        void UpdateCelestin(DbModels.Celestin updateCelestin);
 
+        public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string countryName);
+
+        void DeleteCelestin(DbModels.Celestin deleteCelestin);
         bool Save();
     }
 }

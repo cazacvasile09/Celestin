@@ -5,6 +5,7 @@ using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Celestin.API.Controllers
 {
@@ -114,9 +115,9 @@ namespace Celestin.API.Controllers
                 createdCelestin);
         }
 
-        [Route("CelestinForUdateDto")]
+        [Route("CelestinForUpdateDto")]
         [HttpPut]
-        public IActionResult UdateCelestin(int id, [FromBody] CelestinForCreationDto celestinForUpdate) 
+        public IActionResult UpdateCelestin(int id, [FromBody] CelestinForUpdateDto celestinUpdate) 
         {
             var existingCelestin = celestinRepository.GetCelestin(id, false);
             if (existingCelestin == null) 
@@ -124,7 +125,7 @@ namespace Celestin.API.Controllers
                 return NotFound();
             }
 
-            mapper.Map(celestinForUpdate, existingCelestin);
+            mapper.Map(celestinUpdate, existingCelestin);
             
 
             if (!ModelState.IsValid) 
@@ -134,7 +135,72 @@ namespace Celestin.API.Controllers
 
             celestinRepository.UpdateCelestin(existingCelestin);
 
+            celestinRepository.Save();
+
             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
+        }
+
+        [Route("GetCelestinsByCountry")]
+        [HttpGet]
+
+        public IActionResult GetCelestinsByCountry(string name) 
+        {
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest(ModelState);
+            }
+
+            var celestins = celestinRepository.GetCelestinsByCountry(name);
+
+            return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
+        }
+
+        [Route("CountryByMostBlackHoles")]
+        [HttpGet]
+
+        public IActionResult GetCountryByMostBlackHoles() 
+        {
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest(ModelState);
+            }
+
+            var celestins = factory.GetCelestins(Commons.BlackHole);
+
+            var countryBlackHoleCounts = celestins.GroupBy(bh => bh.DiscoverySource.StateOwner)
+                                                  .Select(grp => new{Country = grp.Key, Count = grp.Count()})
+                                                  .OrderByDescending(x => x.Count)
+                                                  .ToList();
+
+            var topCountry = countryBlackHoleCounts.FirstOrDefault();
+
+            if (topCountry != null)
+            {
+                return Ok($"The country that has discovered the most black holes id {topCountry.Country} with {topCountry.Count} discoveries. ");
+            }
+            else 
+            {
+                return Ok("No black hole discoveries found.");
+            }
+        }
+
+        [Route("DeleteById")]
+        [HttpDelete]
+
+        public IActionResult DeleteCelestin(int id) 
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingCelestin = celestinRepository.GetCelestin(id, false);
+
+            celestinRepository.DeleteCelestin(existingCelestin);
+
+            celestinRepository.Save();
+
+            return Ok("Celestin was deleted");
         }
     }
 }

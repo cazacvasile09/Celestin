@@ -3,6 +3,7 @@ using Celestin.API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace Celestin.API.Repositories
 {
@@ -40,15 +41,24 @@ namespace Celestin.API.Repositories
             ctx.Add(newCelestin);
         }
 
-        public void UpdateCelestin(DbModels.Celestin updateForCelestin)
+        public void UpdateCelestin(DbModels.Celestin updateCelestin)
         {
-            ctx.Update(updateForCelestin);
+            ctx.Update(updateCelestin);
+        }
+
+        public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string countryName) 
+        {
+            countryName = countryName.ToLower();
+            return ctx.Celestin.Include(c => c.DiscoverySource).Where(c => c.DiscoverySource.StateOwner.Contains(countryName)).ToList();
         }
 
         public bool Save()
         {
             return (ctx.SaveChanges() >= 0);
         }
-
+        public void DeleteCelestin(DbModels.Celestin deleteCelestin)
+        {
+            ctx.Celestin.Remove(deleteCelestin);
+        }
     }
 }
