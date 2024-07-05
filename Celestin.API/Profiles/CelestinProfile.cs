@@ -24,6 +24,7 @@ namespace Celestin.API.Profiles
                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.Name));
 
             CreateMap<CelestinForCreationDto, DbModels.Celestin>();
+            CreateMap<CelestinForUpdatingDto, DbModels.Celestin>();
 
         }
 

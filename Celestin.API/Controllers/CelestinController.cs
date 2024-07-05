@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Celestin.API.Common;
+using Celestin.API.DbModels;
 using Celestin.API.Interfaces;
 using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +63,18 @@ namespace Celestin.API.Controllers
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
+        [Route("GetCelestinsByCountry")]
+        public IActionResult GetCelestinsByCountry(string country)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var celestins = celestinRepository.GetCelestinsByCountry(country);
+
+            return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
+        }
 
         [Route("GetCelestinsByType")]
         [HttpGet]
@@ -84,6 +97,8 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+        
+        [Route("CelestinForCreationDto")]
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
         {
@@ -101,7 +116,7 @@ namespace Celestin.API.Controllers
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
 
-            //celestinRepository.AddNewCelestin(newCelestin);
+            celestinRepository.AddNewCelestin(newCelestin);
 
             celestinRepository.Save();
 
@@ -111,6 +126,41 @@ namespace Celestin.API.Controllers
                 "GetCelestin",
                 new { createdCelestin.Id },
                 createdCelestin);
+        }
+        [HttpPut("{id}")]
+        public IActionResult UpdateCelestin(int id, [FromBody] CelestinForUpdatingDto celestin)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingCelestin = celestinRepository.GetCelestin(id, false);
+            if (existingCelestin == null) { 
+                return NotFound();
+            }
+
+
+            mapper.Map(celestin, existingCelestin) ;
+
+            celestinRepository.Update(existingCelestin);
+
+            celestinRepository.Save();
+            return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
+        }
+
+        [Route("GetHole")]
+        [HttpGet]
+        public IActionResult MostBlackHoleDiscoveries()
+        {
+            var country = celestinRepository.MostBlackHoleDiscoveries();
+
+            if (string.IsNullOrEmpty(country))
+            {
+                return NotFound();
+            }
+
+            return Ok(country);
         }
     }
 }

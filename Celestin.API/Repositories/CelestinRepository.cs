@@ -1,4 +1,5 @@
-﻿using Celestin.API.DbModels;
+﻿using Celestin.API.Common;
+using Celestin.API.DbModels;
 using Celestin.API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -34,10 +35,34 @@ namespace Celestin.API.Repositories
         {
             return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.Name.ToLower().Contains(name.ToLower())).ToList();
         }
+        public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country)
+        {
+            return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.DiscoverySource.StateOwner.ToLower().Contains(country.ToLower())).ToList();
+        }
+
+      
+        public bool AddNewCelestin(DbModels.Celestin newCelestin) {
+            ctx.Add(newCelestin);
+            return true;
+        }
+        public void Update(DbModels.Celestin newCelestin) { 
+            ctx.Update(newCelestin);
+        }
 
         public bool Save()
         {
             return (ctx.SaveChanges() >= 0);
+        }
+        public string MostBlackHoleDiscoveries()
+        {
+            var blackHoles = new ConcreteFactory(ctx).GetCelestins(Commons.BlackHole);
+            var countryBlackHoleCount = blackHoles
+                .GroupBy(c => c.DiscoverySource.StateOwner)
+                .Select(g => new { Country = g.Key, Count = g.Count() })
+                .OrderByDescending(g => g.Count)
+                .FirstOrDefault();
+
+            return countryBlackHoleCount?.Country;
         }
     }
 }
