@@ -19,6 +19,8 @@ namespace Celestin.API.Interfaces
 
         string GetCountryWithMostBlackHoleDiscoveries();
 
+        void DeleteCelestin(DbModels.Celestin celestin);
+
         bool Save();
     }
 }

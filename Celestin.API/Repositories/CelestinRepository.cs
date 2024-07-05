@@ -49,6 +49,12 @@ namespace Celestin.API.Repositories
             return countryBlackHoleCount?.Country;
         }
 
+        public void DeleteCelestin(DbModels.Celestin celestin)
+        {
+            ctx.Celestin.Remove(celestin);
+            Save();
+        }
+
 
         public bool Save()
         {
