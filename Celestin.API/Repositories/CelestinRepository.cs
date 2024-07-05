@@ -46,6 +46,12 @@ namespace Celestin.API.Repositories
             ctx.Update(updateCelestin);
         }
 
+        public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string countryName)
+        {
+            countryName = countryName.ToLower();
+            return ctx.Celestin.Include(c => c.DiscoverySource).Where(c => c.DiscoverySource.StateOwner.Contains(countryName)).ToList();
+        }
+
         public bool Save()
         {
             return (ctx.SaveChanges() >= 0);

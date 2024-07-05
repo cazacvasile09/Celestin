@@ -15,6 +15,8 @@ namespace Celestin.API.Interfaces
 
         void UpdateCelestin(DbModels.Celestin updateCelestin);
 
+        IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string countryName);
+
         bool Save();
     }
 }

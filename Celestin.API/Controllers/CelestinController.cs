@@ -5,6 +5,7 @@ using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Celestin.API.Controllers
 {
@@ -117,7 +118,7 @@ namespace Celestin.API.Controllers
         [Route("CelestinForUpdateDto")]
         [HttpPut]
 
-        public IActionResult UpdateCelestin(int id, [FromBody] CelestinForCreationDto celestinUpdate)
+        public IActionResult UpdateCelestin(int id, [FromBody] CelestinForUpdateDto celestinUpdate)
         {
             var existingCelestin = celestinRepository.GetCelestin(id, false);
             if(existingCelestin==null)
@@ -132,7 +133,57 @@ namespace Celestin.API.Controllers
                 return BadRequest(ModelState);
             }
             celestinRepository.UpdateCelestin(existingCelestin);
+
+            celestinRepository.Save();
+
             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
         }
+
+        [Route("GetCelestinByCountry")]
+        [HttpGet]
+
+        public IActionResult GetCelestinsByCountry(string name)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var celestins = celestinRepository.GetCelestinsByCountry(name);
+
+            return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
+        }
+
+        [Route("GetCountryByMostBlackHoles")]
+        [HttpGet]
+
+        public IActionResult GetCountryByMostBlackHoles()
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var celestins = factory.GetCelestins(Commons.BlackHole);
+
+            var countryBlackHoleCounts = celestins
+                .GroupBy(bh => bh.DiscoverySource.StateOwner)
+                .Select(grp => new { Country = grp.Key, Count = grp.Count() })
+                .OrderByDescending(x => x.Count)
+                .ToList();
+            var topCountry = countryBlackHoleCounts.FirstOrDefault();
+
+            if(topCountry != null)
+            {
+                return Ok($"The country that has discovered the most black holes is {topCountry.Country} with {topCountry.Count} discoveries.");
+            }
+            else
+            {
+                return Ok("No black hole discoveries found!");
+            }
+        }
+
     }
 }
