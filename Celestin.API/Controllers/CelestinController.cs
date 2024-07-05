@@ -153,6 +153,7 @@ namespace Celestin.API.Controllers
         }
 
         [Route("DeleteCelestin")]
+        [HttpDelete]
         public IActionResult DeleteCelestin(DbModels.Celestin celestin)
         {
             var c = celestinRepository.GetCelestin(celestin.Id, false);
