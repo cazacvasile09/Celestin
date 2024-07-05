@@ -10,6 +10,6 @@ namespace Celestin.API.Models.CelestinModels
         public double EquatorialDiameter { get; set; }
         public int SurfaceTemperature { get; set; }
         public DateTime DiscoveryDate { get; set; }
-        public int DiscoverySourceId { get; set; }
+
     }
 }
