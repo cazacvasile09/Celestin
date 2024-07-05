@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Celestin.API.Models.CelestinModels
 {
-    public class CelestinForCreationDto
+    public class CelestinForUpdateDto
     {
-        [MaxLength(200)]
-
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public decimal Mass { get; set; }
@@ -15,10 +14,7 @@ namespace Celestin.API.Models.CelestinModels
 
         public int SurfaceTemperature { get; set; }
 
-        [Required]
         public DateTime DiscoveryDate { get; set; }
-
-        public int DiscoverySourceId { get; set; }
 
     }
 }

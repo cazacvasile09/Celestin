@@ -25,6 +25,8 @@ namespace Celestin.API.Profiles
 
             CreateMap<CelestinForCreationDto, DbModels.Celestin>();
 
+            //TREBUIE DECLARAT ASTA
+            CreateMap<CelestinForUpdateDto, DbModels.Celestin>();
         }
 
         private string GetCelestinType(DbModels.Celestin item)

@@ -47,5 +47,9 @@ namespace Celestin.API.Repositories
         {
             return (ctx.SaveChanges() >= 0);
         }
+        public void updateCelestin(DbModels.Celestin c) //functia care face update la obiect cu noile informatii
+        {
+            ctx.Celestin.Update(c);
+        }
     }
 }

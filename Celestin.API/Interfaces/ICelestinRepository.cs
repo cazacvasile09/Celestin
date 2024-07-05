@@ -16,5 +16,7 @@ namespace Celestin.API.Interfaces
         void AddNewCelestin(DbModels.Celestin c); //aici am scris antetul metodei(efectiv e de tip void si mergem cu un obiect de tip Celestin)
         //e bine macar ca am stiut unde trebuie sa o declar si implementez :))
         bool Save();
+
+        void updateCelestin(DbModels.Celestin c);//functia pentru update la un object deja existent, se va lua dupa id
     }
 }

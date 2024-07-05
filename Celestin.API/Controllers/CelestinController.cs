@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Celestin.API.Common;
+using Celestin.API.DbModels;
 using Celestin.API.Interfaces;
 using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
@@ -115,6 +116,40 @@ namespace Celestin.API.Controllers
                 "GetCelestin",
                 new { createdCelestin.Id },
                 createdCelestin);
+        }
+
+        [Route("UpdateCelestin")]
+        [HttpPut]
+        /*public IActionResult UpdateCelestin([FromBody] CelestinForCreationDto c) //prima incercare(fail)
+        {
+            var newCelestin = mapper.Map<DbModels.Celestin>(c);
+
+
+
+            celestinRepository.UpdateCelestin(newCelestin);
+
+            celestinRepository.Save();
+
+            var updatedCelestin = mapper.Map<CelestinWithoutDiscoveryDto>(newCelestin);
+
+            //return TryUpdateModelAsync<>();
+            return Ok(mapper.Map<IEnumerable<CelestinWithoutDiscoveryDto>>(updatedCelestin));
+        }*/
+        public IActionResult UpdateCelestin([FromBody] CelestinForUpdateDto updatedCelestin) //in c este obiectul in care sunt noile valori ce trb updatate
+        {
+
+            //pasul 1: noile informatii le mapam intr-un alt obiect, dar pastram id-ul obiectului initial/vechi
+            var initialCelestin = celestinRepository.GetCelestin(updatedCelestin.Id, false);
+            mapper.Map(updatedCelestin, initialCelestin);
+
+            //pasul 2: dam update la acest obiect in baza de date
+            celestinRepository.updateCelestin(initialCelestin);
+
+            //pasul 3: dam save
+            celestinRepository.Save();
+
+            //pasul 4:afisam un mesaj de confirmare
+            return Ok("Update cu succes!");
         }
     }
 }
