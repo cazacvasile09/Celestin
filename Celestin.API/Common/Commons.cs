@@ -11,5 +11,6 @@ namespace Celestin.API.Common
         public const string Planet = "planet";
         public const string Star = "star";
         public const string unknown = "Unknown";
+        public const string MostBlackHoles = "TheMostBlackHoles";
     }
 }

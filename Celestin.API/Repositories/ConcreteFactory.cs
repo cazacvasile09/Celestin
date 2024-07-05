@@ -25,6 +25,10 @@ namespace Celestin.API.Repositories
                     return new Stars(ctx).GetCelestins();
                 case Commons.BlackHole:
                     return new BlackHoles(ctx).GetCelestins();
+                case Commons.MostBlackHoles:
+                    return new List<DbModels.Celestin>();
+
+
                 default:
                     return null;
             }

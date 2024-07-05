@@ -23,7 +23,8 @@ namespace Celestin.API.CelestinClassifier
 
             return items.Where(IsPartOfObject).ToList();
         }
-
+        
+      
         public bool IsPartOfObject(DbModels.Celestin item)
         {
             var radius = item.EquatorialDiameter / 2;

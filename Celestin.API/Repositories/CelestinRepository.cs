@@ -1,8 +1,12 @@
 ﻿using Celestin.API.DbModels;
 using Celestin.API.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Celestin.API.Models.CelestinModels;
+
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using Celestin.API.Common;
 
 namespace Celestin.API.Repositories
 {
@@ -34,10 +38,32 @@ namespace Celestin.API.Repositories
         {
             return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.Name.ToLower().Contains(name.ToLower())).ToList();
         }
+        public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country)
+        {
+            return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.DiscoverySource.StateOwner.ToLower().Contains(country.ToLower())).ToList();
+        }
 
         public bool Save()
         {
             return (ctx.SaveChanges() >= 0);
+        }
+
+        public void AddNewCelestin(DbModels.Celestin newCelestin) => ctx.Celestin.Add(newCelestin);
+
+        public void Update(DbModels.Celestin updateCelestin)
+        {
+            ctx.Celestin.Update(updateCelestin);
+        }
+        public string GetCountryWithMostBlackHole()
+        {
+            var blackHoles = new ConcreteFactory(ctx).GetCelestins(Commons.BlackHole);
+            var countryBlackHoleCount = blackHoles
+                .GroupBy(c => c.DiscoverySource.StateOwner)
+                .Select(g => new { Country = g.Key, Count = g.Count() })
+                .OrderByDescending(g => g.Count)
+                .FirstOrDefault();
+
+            return countryBlackHoleCount?.Country;
         }
     }
 }
