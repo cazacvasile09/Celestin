@@ -161,9 +161,9 @@ namespace Celestin.API.Controllers
             {
                 throw new Exception("Updating a celestin failed on save.");
             }
-            //return Ok(Mapper)
+            
 
-            //return NoContent();
+
             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
 
         }
@@ -178,7 +178,7 @@ namespace Celestin.API.Controllers
                 return NotFound();
             }
 
-            return Ok(country);
+            return Ok(country); 
         }
 
 
