@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Celestin.API.CelestinClassifier;
 using Celestin.API.Common;
+using Celestin.API.Models;
 using Celestin.API.Models.CelestinModels;
 using System;
 using System.Linq.Expressions;
@@ -20,10 +21,12 @@ namespace Celestin.API.Profiles
 
             CreateMap<DbModels.Celestin, CelestinWithoutDiscoveryDto>();
 
-            CreateMap<DbModels.DiscoverySource, Models.DiscoverySourceDto>()
+            CreateMap<DbModels.DiscoverySource, DiscoverySourceDto>()
                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.Name));
 
             CreateMap<CelestinForCreationDto, DbModels.Celestin>();
+
+            CreateMap<CelestinForUpdateDto, DbModels.Celestin>();
 
         }
 

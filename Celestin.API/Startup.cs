@@ -48,7 +48,7 @@ namespace Celestin.API
             services.AddScoped<IAbstractFactory, ConcreteFactory>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
