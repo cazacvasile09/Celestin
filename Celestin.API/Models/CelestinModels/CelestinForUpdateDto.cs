@@ -16,7 +16,6 @@ namespace Celestin.API.Models.CelestinModels
         [Required]
         public DateTime DiscoveryDate { get; set; }
 
-        
     }
 
 }
