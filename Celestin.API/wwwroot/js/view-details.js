@@ -19,6 +19,7 @@ const NAV_ID_LIST = "list";
 const NAV_ID_ADD = "add";
 const NAV_ID_ABOUT = "about";
 
+
 const links = [
     {
         path: `${NAV_PATH_BASE}${NAV_PATH_LIST}`,
@@ -91,12 +92,10 @@ function getNavbar(activePage) {
 
 function populateForm(element) {
     setInputValue("input-name", element.name);
-
     setInputValue("input-mass", element.mass || "");
-    setInputValue("input-diameter", element.diameter || 0);
-    setInputValue("input-temperature", element.temperature || "");
-    setInputValue("input-date", element.date || "");
-
+    setInputValue("input-diameter", element.equatorialDiameter || 0);
+    setInputValue("input-temperature", element.surfaceTemperature || "");
+    setInputValue("input-date", element.discoveryDate || "");
 }
 
 function hideElement(id) {
@@ -180,16 +179,17 @@ window.addEventListener("load", async () => {
 function getObjectFromElements() {
 
     return {
-        name: document.getElementById("input-name").value,
-        mass: document.getElementById("input-mass").value,
-        diameter: document.getElementById("input-diameter").value,
-        temperature: document.getElementById("input-temperature").value,
-        "date": document.getElementById("input-date").value,
+        Name: document.getElementById("input-name").value,
+        Mass: parseFloat(document.getElementById("input-mass").value),
+        EquatorialDiameter: parseInt(document.getElementById("input-diameter").value),
+        SurfaceTemperature: parseInt(document.getElementById("input-temperature").value),
+        DiscoveryDate: document.getElementById("input-date").value,
+        DiscoverySourceId: 1
     };
 }
 
 async function add(data) {
-    const response = await fetch(`${BASE_URL}${LIST_ITEMS}/CelestinForCreationDto`, {
+    const response = await fetch(`${BASE_URL}${LIST_ITEMS}/CreateCelestin`, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -216,4 +216,14 @@ document.addEventListener("submit", function (e) {
         // handle add
         add(myObj);
     }
+});
+
+/* Incercarea de la primul de a le ascunde (fail) 
+$("#Menu2Container").hide();
+
+$("#Menu1").on("change", function () {
+    if ($(this).val() == "Yes")
+        $("#Menu2Container").show();
+    else
+        $("#Menu2Container").hide();
 });

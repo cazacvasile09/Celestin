@@ -51,6 +51,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(celestin));
         }
 
+
         [Route("GetCelestinsByName")]
         public IActionResult GetCelestinsByName(string name)
         {
@@ -66,8 +67,6 @@ namespace Celestin.API.Controllers
 
 
         [Route("GetCelestinsByType")]
-
-
         [HttpGet]
         public IActionResult GetCelestinsByType(string type)
         {
@@ -83,6 +82,8 @@ namespace Celestin.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            //if (type == "Name")
+              //  return MessageBox.Show("Test");
             var celestins = factory.GetCelestins(type);
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));

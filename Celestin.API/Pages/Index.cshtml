@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-@* 
+@*
 
 <!DOCTYPE html>
 <html>
@@ -50,6 +50,24 @@
 </head>
 <body>
     <script src="./js/index.js"></script>
+    <!-- Prima incercare (fail)
+    <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">Menu1</label>
+                <select class="form-control" name="name" id="Menu1">
+                    <option value="">--Please choose an option--</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4" id="Menu2Container">
+                <label for="inputPassword4">Menu2</label>
+                <select class="form-control" name="pets" id="Menu2">
+                    <option value="">--Please choose an option--</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                </select>
+            </div>-->
     <div id='navbar'></div>
     <div class='container'>
         <h1>List</h1>
@@ -58,21 +76,30 @@
         <div id="dynamic-content-container">
             <div class="search-container">
                 <label for="searchSelect">Filter column:</label>
-                <div@*  class="custom-select" *@>
-                    <select name="searchSelect" id="searchSelect">
+                <div@* class="custom-select" *@>
+                    <select name="searchSelect" id="searchSelect" onchange="typeChanged()">
                         <option value="/GetCelestinsByName?name">Name</option>
                         <option value="/GetCelestinsByType?type">Type</option>
                     </select>
-                </div>
-                <div class="div-line"></div>
-                <div class="search-input-container">
-                    <i class="fa fa-search icon my-search-icon"></i>
-                    <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
-                </div>
-                <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
             </div>
-            <div id="table"></div>
+            <div class="div-line"></div>
+            <div@* class="custom-select" *@>
+                <select name="celestinSelect" id="typeSelect" class="hidden" onchange="typeCelestinChanged()">
+                    <option value="/GetCelestinsByName?name">Planet</option>
+                    <option value="/GetCelestinsByType?type">BlackHole</option>
+                    <option value="/GetCelestinsByType?type">Star</option>
+                    <option value="/GetCelestinsByType?type">BlackHole</option>
+                </select>
         </div>
+        <div class="div-line"></div>
+        <div class="search-input-container" id="searchBox">
+            <i class="fa fa-search icon my-search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
+        </div>
+        <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
+    </div>
+    <div id="table"></div>
+    </div>
     </div>
 </body>
 </html>
