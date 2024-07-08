@@ -1,5 +1,5 @@
 
-const BASE_URL = 'https://localhost:44335/api';
+const BASE_URL = 'https://localhost:5001/api';
 const LIST_ITEMS = '/celestin';
 
 const NAV_TITLE_LIST = "List";
@@ -89,13 +89,15 @@ function getNavbar(activePage) {
     return navElement;
 }
 
-function populateForm(element) {
-    setInputValue("input-name", element.name);
 
+/////////////////////////////////////////////////////////////DONE
+function populateForm(element) {
+    console.log(element)
+    setInputValue("input-name", element.name);
     setInputValue("input-mass", element.mass || "");
-    setInputValue("input-diameter", element.diameter || 0);
-    setInputValue("input-temperature", element.temperature || "");
-    setInputValue("input-date", element.date || "");
+    setInputValue("input-diameter", element.equatorialDiameter);
+    setInputValue("input-temperature", element.surfaceTemperature || "");
+    setInputValue("input-date", element.discoveryDate|| "");
 
 }
 
@@ -180,11 +182,12 @@ window.addEventListener("load", async () => {
 function getObjectFromElements() {
 
     return {
-        name: document.getElementById("input-name").value,
-        mass: document.getElementById("input-mass").value,
-        diameter: document.getElementById("input-diameter").value,
-        temperature: document.getElementById("input-temperature").value,
-        "date": document.getElementById("input-date").value,
+        Name: document.getElementById("input-name").value,
+        Mass: parseFloat(document.getElementById("input-mass").value),
+        EquatorialDiameter: parseInt(document.getElementById("input-diameter").value),
+        Surfacetemperature: parseInt(document.getElementById("input-temperature").value),
+        Discoverydute: document.getElementById("input-date").value,
+        DiscoverySourceId: 1,
     };
 }
 
@@ -204,14 +207,32 @@ async function add(data) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
+async function update(data,id ) {
+    const response = await fetch(`${BASE_URL}${LIST_ITEMS}/${id}`, {
+        method: "PUT", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+}
 
 document.addEventListener("submit", function (e) {
     e.preventDefault();
     const objId = getIdParam();
     const myObj = getObjectFromElements();
     if (objId) {
-        // handle update
-        alert(JSON.stringify(myObj));
+        const formattedObj = { ...myObj, id: myObj };
+
+        update(myObj,objId);
+        //alert(JSON.stringify(myObj));
     } else {
         // handle add
         add(myObj);
