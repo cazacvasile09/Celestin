@@ -17,7 +17,5 @@ namespace Celestin.API.Controllers
 
         [Required]
         public DateTime DiscoveryDate { get; set; }
-
-        public int DiscoverySourceId { get; set; }
     }
 }

@@ -184,7 +184,7 @@ function getObjectFromElements() {
         EquatorialDiameter: parseInt( document.getElementById("input-diameter").value),
         SurfaceTemperature: parseInt (document.getElementById("input-temperature").value),
         Discoverydate: document.getElementById("input-date").value,
-        DiscoverySourceId: 1,
+        discoverySourceId: 6,
     };
 }
 
