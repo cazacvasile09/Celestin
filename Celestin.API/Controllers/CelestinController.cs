@@ -46,12 +46,10 @@ namespace Celestin.API.Controllers
                 return NotFound();
             }
 
-            if (includeDiscovery)
-            {
-                return Ok(mapper.Map<CelestinWithDiscoveryObjectDto>(celestin));
-            }
+            
 
-            return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(celestin));
+             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(celestin));
+            
         }
 
         [Route("GetCelestinsByName")]

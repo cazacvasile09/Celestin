@@ -59,7 +59,7 @@
             <div class="search-container">
                 <label for="searchSelect">Filter column:</label>
                 <div@*  class="custom-select" *@>
-                    <select name="searchSelect" id="searchSelect">
+                    <select name="searchSelect" id="searchSelect" onchange="toggleSearchInput()">
                         <option value="/GetCelestinsByName?name">Name</option>
                         <option value="/GetCelestinsByType?type">Type</option>
                     </select>
@@ -69,10 +69,38 @@
                     <i class="fa fa-search icon my-search-icon"></i>
                     <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
                 </div>
+                <div id="checkboxesContainer" style="display: none;">
+                <select name="searchType" id="searchType" onchange="toggleSearchType()">
+                        <option value="planet">Planet</option>
+                        <option value="Star">Stea</option>
+                    <option value="BlackHole">BlackHole</option>
+                    </select>
+                </div>
                 <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
+                </div>
             </div>
+                
             <div id="table"></div>
         </div>
     </div>
+    <script>
+        function toggleSearchInput() {
+            const searchSelect = document.getElementById('searchSelect');
+            const searchInput = document.getElementById('searchInput');
+            const checkboxesContainer = document.getElementById('checkboxesContainer');
+
+            if (searchSelect.value === '/GetCelestinsByName?name') {
+                searchInput.style.display = 'block';
+                checkboxesContainer.style.display = 'none'; // Ascundem container-ul cu checkbox-uri
+            } else if (searchSelect.value === '/GetCelestinsByType?type') {
+                searchInput.style.display = 'none';
+                checkboxesContainer.style.display = 'block'; // Afișăm container-ul cu checkbox-uri
+            }
+        }
+        function toggleSearchType() {
+            searchInput.value = document.getElementById('searchType').value;
+            
+        }
+    </script>
 </body>
 </html>
