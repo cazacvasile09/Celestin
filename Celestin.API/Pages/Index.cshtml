@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-@* 
+@*
 
 <!DOCTYPE html>
 <html>
@@ -58,21 +58,30 @@
         <div id="dynamic-content-container">
             <div class="search-container">
                 <label for="searchSelect">Filter column:</label>
-                <div@*  class="custom-select" *@>
-                    <select name="searchSelect" id="searchSelect">
+                <div@* class="custom-select" *@>
+                    <select name="searchSelect" id="searchSelect" onchange="typeChanged()">
                         <option value="/GetCelestinsByName?name">Name</option>
                         <option value="/GetCelestinsByType?type">Type</option>
                     </select>
-                </div>
-                <div class="div-line"></div>
-                <div class="search-input-container">
-                    <i class="fa fa-search icon my-search-icon"></i>
-                    <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
-                </div>
-                <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
             </div>
-            <div id="table"></div>
+            <div class="div-line"></div>
+            <div@* class="custom-select" *@>
+                <select name="celestinSelect" id="typeSelect" class="hidden" onchange="typeCelestinChanged()">
+                    <option value="/GetCelestinsByName?name">Planet</option>
+                    <option value="/GetCelestinsByType?type">BlackHoles</option>
+                    <option value="/GetCelestinsByType?type">Star</option>
+                    <option value="/GetCelestinsByType?type">Unknow</option>
+                </select>
         </div>
+        <div class="div-line"></div>
+        <div class="search-input-container" id="searchBox">
+            <i class="fa fa-search icon my-search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
+        </div>
+        <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
+    </div>
+    <div id="table"></div>
+    </div>
     </div>
 </body>
 </html>
