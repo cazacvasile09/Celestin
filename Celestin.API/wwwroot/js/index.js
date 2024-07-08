@@ -1,4 +1,4 @@
-const BASE_URL = 'https://localhost:44335/api';
+const BASE_URL = 'https://localhost:3001/api';
 const LIST_ITEMS = '/celestin';
 
 const NAV_TITLE_LIST = "List";
@@ -17,6 +17,7 @@ const NAV_ID_BASE = "link-item";
 const NAV_ID_LIST = "list";
 const NAV_ID_ADD = "add";
 const NAV_ID_ABOUT = "about";
+
 
 const links = [
     {
@@ -223,3 +224,29 @@ window.addEventListener("load", () => {
 
     readData();
 });
+
+const typeChanged = () => {
+    const searchBox = document.getElementById('searchBox');
+    const celestinTypeBox = document.getElementById('typeSelect');
+    const filterNode = document.getElementById('searchSelect');
+    const inputSearch = document.getElementById('searchInput');
+
+    const activeNode = filterNode.selectedOptions[0].innerText;
+
+    if (activeNode == 'Type') {
+        searchBox.classList.add('hidden');
+        celestinTypeBox.classList.remove('hidden');
+        inputSearch.value = 'Planet';
+    } else {
+        searchBox.classList.remove('hidden');
+        celestinTypeBox.classList.add('hidden');
+        inputSearch.value = "";
+    }
+};
+
+const typeCelestinChanged = () => {
+    const celestinTypeBox = document.getElementById('typeSelect');
+    const inputSearch = document.getElementById('searchInput');
+    const activeNode = celestinTypeBox.selectedOptions[0].innerText;
+    inputSearch.value = activeNode;
+};
