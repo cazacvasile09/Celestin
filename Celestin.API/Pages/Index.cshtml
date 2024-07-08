@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-@* 
+@*
 
 <!DOCTYPE html>
 <html>
@@ -58,21 +58,50 @@
         <div id="dynamic-content-container">
             <div class="search-container">
                 <label for="searchSelect">Filter column:</label>
-                <div@*  class="custom-select" *@>
-                    <select name="searchSelect" id="searchSelect">
+                <div@* class="custom-select" *@>
+                    <select name="searchSelect" id="searchSelect" onchange="toggleSearchInput()">
                         <option value="/GetCelestinsByName?name">Name</option>
                         <option value="/GetCelestinsByType?type">Type</option>
                     </select>
-                </div>
-                <div class="div-line"></div>
-                <div class="search-input-container">
-                    <i class="fa fa-search icon my-search-icon"></i>
-                    <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
-                </div>
-                <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
             </div>
-            <div id="table"></div>
+            <div class="div-line"></div>
+            <div class="search-input-container">
+                <i class="fa fa-search icon my-search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search for your data.." title="Type in a value">
+            </div>
+            <div id="dropDownTypes" style="display: none;">
+                <select name="searchType" id="searchType" onchange="toggleTypeSearch()">
+                    <option value="planet">Planet</option>
+                    <option value="star">Star</option>
+                    <option value="blackHole">Black Hole</option>
+                </select>
+            </div>
+            <button type="button" id="searchButton" onclick="fetchFilteredData()">Filter</button>
         </div>
+
     </div>
+
+    <div id="table"></div>
+    </div>
+    </div>
+    <script>
+        function toggleSearchInput() {
+            const searchSelect = document.getElementById('searchSelect');
+            const searchInput = document.getElementById('searchInput');
+            const dropDownTypes = document.getElementById('dropDownTypes');
+
+            if (searchSelect.value === '/GetCelestinsByName?name') {
+                searchInput.style.display = 'block';
+                dropDownTypes.style.display = 'none';
+            } else if (searchSelect.value === '/GetCelestinsByType?type') {
+                searchInput.style.display = 'none';
+                dropDownTypes.style.display = 'block'; 
+                
+            }
+        }
+        function toggleTypeSearch(){ 
+            searchInput.value = document.getElementById('searchType').value;
+        }
+    </script>
 </body>
 </html>

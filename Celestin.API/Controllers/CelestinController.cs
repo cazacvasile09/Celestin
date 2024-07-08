@@ -149,7 +149,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<CelestinWithoutDiscoveryDto>(existingCelestin));
         }
 
-        [Route("GetHole")]
+        [Route("BlackHoles")]
         [HttpGet]
         public IActionResult MostBlackHoleDiscoveries()
         {
