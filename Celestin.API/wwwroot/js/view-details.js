@@ -1,4 +1,3 @@
-
 const BASE_URL = 'https://localhost:5001/api';
 const LIST_ITEMS = '/celestin';
 
@@ -22,18 +21,18 @@ const NAV_ID_ABOUT = "about";
 
 const links = [
     {
-        path: `${NAV_PATH_BASE}${NAV_PATH_LIST}`,
-        title: NAV_TITLE_LIST,
-        id: NAV_ID_LIST,
+        path: ${ NAV_PATH_BASE }${ NAV_PATH_LIST },
+    title: NAV_TITLE_LIST,
+    id: NAV_ID_LIST,
     },
-    {
-        path: `${NAV_PATH_BASE}${NAV_PATH_ADD}`,
-        title: NAV_TITLE_ADD,
+{
+    path: ${ NAV_PATH_BASE }${ NAV_PATH_ADD },
+    title: NAV_TITLE_ADD,
         id: NAV_ID_ADD,
     },
-    {
-        path: `${NAV_PATH_BASE}${NAV_PATH_ABOUT}`,
-        title: NAV_TITLE_ABOUT,
+{
+    path: ${ NAV_PATH_BASE }${ NAV_PATH_ABOUT },
+    title: NAV_TITLE_ABOUT,
         id: NAV_ID_ABOUT,
     },
 ];
@@ -78,7 +77,7 @@ function getNavbar(activePage) {
         const aElement = getNewLink(
             link.title,
             link.path,
-            `${NAV_ID_BASE}-${link.id}`,
+            ${ NAV_ID_BASE } - ${ link.id },
         );
         if (link.title === activePage) {
             aElement.setAttribute("class", "active");
@@ -116,7 +115,7 @@ function setTexts(titleContent, submitContent) {
 function updateContent(isEditMode) {
     if (isEditMode) {
         setTexts("Edit element", "Save");
-        updateNavbarContent(`${NAV_ID_BASE}-${NAV_ID_ADD}`, NAV_TITLE_EDIT);
+        updateNavbarContent(${ NAV_ID_BASE } - ${ NAV_ID_ADD }, NAV_TITLE_EDIT);
     } else {
         setTexts("Add new element", "Add");
         hideElement("loader-container");
@@ -150,7 +149,7 @@ async function fetchData(url) {
 async function getData(id) {
     hideElement("form");
 
-    const url = `${BASE_URL}${LIST_ITEMS}/${id}`;
+    const url = ${ BASE_URL }${ LIST_ITEMS }/${id};
     const data = await fetchData(url);
 
     populateForm(data);
@@ -189,7 +188,7 @@ function getObjectFromElements() {
 }
 
 async function add(data) {
-    const response = await fetch(`${BASE_URL}${LIST_ITEMS}/CreateCelestin`, {
+    const response = await fetch(${ BASE_URL }${ LIST_ITEMS } / CreateCelestin, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

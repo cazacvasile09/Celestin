@@ -20,29 +20,29 @@
 <div class='container'>
     <h1 id='heading-title'></h1>
     <div class="loader" id='loader-container'></div>
-    <form id='form'>
-        <div>
-            <label for="input-name">Name:</label>
-            <input type="text" id="input-name" name="name">
-        </div>
-        <div>
-            <label for="input-mass">Mass:</label>
-            <input type="number" id="input-mass" name="mass">
-        </div>
-        <div>
-            <label for="input-diameter">Equatorial Diameter:</label>
-            <input type="number" id="input-diameter" name="diameter">
-        </div>
-        <div>
-            <label for="input-temperature">Surface temperature:</label>
-            <input type="text" id="input-temperature" name="input-temperature">
-        </div>
-        <div>
-            <label for="input-date">Discovery dute:</label>
-            <input type="text" id="input-date" name="input-date">
-        </div>
-        <input type="submit" value="Submit" id='input-submit'>
-    </form>
+        <form id='form'>
+            <div>
+                <label for="input-name">Name:</label>
+                <input type="text" id="input-name" name="name">
+            </div>
+            <div>
+                <label for="input-mass">Mass:</label>
+                <input type="number" id="input-mass" name="mass" min="0">
+            </div>
+            <div>
+                <label for="input-diameter">Equatorial Diameter:</label>
+                <input type="number" id="input-diameter" name="diameter" min="0">
+            </div>
+            <div>
+                <label for="input-temperature">Surface temperature:</label>
+                <input type="number" id="input-temperature" name="input-temperature" min="0">
+            </div>
+            <div>
+                <label for="input-date">Discovery date:</label>
+                <input type="text" id="input-date" name="input-date">
+            </div>
+            <input type="submit" value="Submit" id='input-submit'>
+        </form>
 </div>
 </body>
 </html>
