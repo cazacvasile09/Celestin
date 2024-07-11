@@ -96,11 +96,11 @@
             } else if (searchSelect.value === '/GetCelestinsByType?type') {
                 searchInput.style.display = 'none';
                 dropDownTypes.style.display = 'block'; 
-                
+                searchInput.value = document.getElementById('searchType').value;
             }
         }
         function toggleTypeSearch(){ 
-            searchInput.value = document.getElementById('searchType').value;
+            searchInput.value = document.getElementById('searchType').value; 
         }
     </script>
 </body>

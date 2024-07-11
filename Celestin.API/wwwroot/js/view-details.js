@@ -178,7 +178,6 @@ window.addEventListener("load", async () => {
 });
 
 function getObjectFromElements() {
-
     return {
         Name: document.getElementById("input-name").value,
         Mass: parseFloat(document.getElementById("input-mass").value),

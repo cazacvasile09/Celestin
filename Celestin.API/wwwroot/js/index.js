@@ -68,6 +68,8 @@ async function fetchFilteredData() {
     const searchFieldValue = searchSelect.value;
     const searchValue = searchInput.value;
 
+    document.getElementById('searchInput').value = " ";
+
     const url = `${BASE_URL}${LIST_ITEMS}${searchFieldValue}=${searchValue}`;
     const data = await fetchData(url);
     const divTable = document.getElementById('table');
