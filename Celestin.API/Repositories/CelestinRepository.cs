@@ -33,10 +33,20 @@ namespace Celestin.API.Repositories
 
         public IEnumerable<DbModels.Celestin> GetCelestinsByName(string name)
         {
-            return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.Name.ToLower().Contains(name.ToLower())).ToList();
+
+            if (!string.IsNullOrEmpty(name))
+            { return ctx.Celestin.Include(x => x.DiscoverySource).Where(y => y.Name.ToLower().Contains(name.ToLower())).ToList(); }
+
+            else
+            {
+
+                //return new ErrorResult { ErrorMessage = "Field 'Name' must be completed" };
+                return ctx.Celestin;
+            }
         }
 
-        public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country)
+
+            public IEnumerable<DbModels.Celestin> GetCelestinsByCountry(string country)
         {
             return ctx.Celestin.Include(c => c.DiscoverySource).Where(c => c.DiscoverySource.StateOwner.ToLower() == country.ToLower()).ToList();
         }

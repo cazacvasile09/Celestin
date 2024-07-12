@@ -64,6 +64,7 @@ namespace Celestin.API.Controllers
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
 
+
         [Route("GetCelestinsByType")]
         [HttpGet]
         public IActionResult GetCelestinsByType(string type)
