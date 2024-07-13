@@ -85,6 +85,7 @@ namespace Celestin.API.Controllers
 
             return Ok(mapper.Map<IEnumerable<CelestinWithDiscoveryDto>>(celestins));
         }
+
         [Route("CelestinForCreationDto")]
         [HttpPost]
         public IActionResult CreateCelestin([FromBody] CelestinForCreationDto celestin)
@@ -114,6 +115,7 @@ namespace Celestin.API.Controllers
                 new { createdCelestin.Id },
                 createdCelestin);
         }
+
         [Route("CelestinForUpdateDto")]
         [HttpPut("{id}")]
         public IActionResult UpdateCelestin(int id, [FromBody] CelestinForUpdateDto celestin)

@@ -14,7 +14,12 @@ namespace Celestin.API.Repositories
         public CelestinRepository(NasaContext _ctx)
         {
             ctx = _ctx;
-        }     
+        }
+
+        public void AddNewCelestin(DbModels.Celestin newCelestin)
+        {
+            ctx.Celestin.Add(newCelestin);
+        }
 
         public DbModels.Celestin GetCelestin(int id, bool includeDiscovery)
         {
@@ -70,10 +75,7 @@ namespace Celestin.API.Repositories
         {
             return (ctx.SaveChanges() >= 0);
         }
-        public void AddNewCelestin(DbModels.Celestin celestin)
-        {
-            ctx.Celestin.Add(celestin);
-        }
+        
         public void UpdateCelestin(DbModels.Celestin celestin)
         {
             ctx.Celestin.Update(celestin);
