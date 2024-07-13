@@ -1,4 +1,3 @@
-
 const BASE_URL = 'https://localhost:5001/api';
 const LIST_ITEMS = '/celestin';
 
@@ -126,23 +125,20 @@ function updateContent(isEditMode) {
 async function fetchData(url) {
     try {
         const response = await fetch(url, {
-            mode: 'no-cors',
+            mode: 'cors', // Changed from 'no-cors' to 'cors'
             method: "GET",
             headers: {
-                "Access-Control-Allow-Headers": "Content-Type",
-                "Access-Control-Allow-Origin": "*",
                 'Content-Type': 'application/json',
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
             },
         });
         if (!response.ok) {
             alert('Data not available..');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
         return result;
     } catch (error) {
-
-        console.error(error);
+        console.error('Failed to fetch:', error);
         throw error;
     }
 }
@@ -151,17 +147,19 @@ async function getData(id) {
     hideElement("form");
 
     const url = `${BASE_URL}${LIST_ITEMS}/${id}`;
-    const data = await fetchData(url);
-
-    populateForm(data);
-    debugger;
-    hideElement("loader-container");
-    showElement("form");
+    try {
+        const data = await fetchData(url);
+        populateForm(data);
+        hideElement("loader-container");
+        showElement("form");
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        alert('Failed to load data.');
+    }
 }
 
 function getIdParam() {
     const urlParams = new URLSearchParams(window.location.search);
-
     return urlParams.get("id");
 }
 
@@ -172,12 +170,11 @@ window.addEventListener("load", async () => {
     updateContent(objId !== null);
 
     if (objId !== null) {
-        getData(objId);
+        await getData(objId);
     }
 });
 
 function getObjectFromElements() {
-
     return {
         Name: document.getElementById("input-name").value,
         Mass: parseFloat(document.getElementById("input-mass").value),
