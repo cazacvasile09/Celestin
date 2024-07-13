@@ -1,5 +1,5 @@
 
-const BASE_URL = 'https://localhost:44335/api';
+const BASE_URL = 'https://localhost:5001/api';
 const LIST_ITEMS = '/celestin';
 
 const NAV_TITLE_LIST = "List";
@@ -18,6 +18,7 @@ const NAV_ID_BASE = "link-item";
 const NAV_ID_LIST = "list";
 const NAV_ID_ADD = "add";
 const NAV_ID_ABOUT = "about";
+
 
 const links = [
     {
@@ -91,12 +92,10 @@ function getNavbar(activePage) {
 
 function populateForm(element) {
     setInputValue("input-name", element.name);
-
     setInputValue("input-mass", element.mass || "");
-    setInputValue("input-diameter", element.diameter || 0);
-    setInputValue("input-temperature", element.temperature || "");
-    setInputValue("input-date", element.date || "");
-
+    setInputValue("input-diameter", element.equatorialDiameter || 0);
+    setInputValue("input-temperature", element.surfaceTemperature || "");
+    setInputValue("input-date", element.discoveryDate || "");
 }
 
 function hideElement(id) {
@@ -180,16 +179,17 @@ window.addEventListener("load", async () => {
 function getObjectFromElements() {
 
     return {
-        name: document.getElementById("input-name").value,
-        mass: document.getElementById("input-mass").value,
-        diameter: document.getElementById("input-diameter").value,
-        temperature: document.getElementById("input-temperature").value,
-        "date": document.getElementById("input-date").value,
+        Name: document.getElementById("input-name").value,
+        Mass: parseFloat(document.getElementById("input-mass").value),
+        EquatorialDiameter: parseInt(document.getElementById("input-diameter").value),
+        SurfaceTemperature: parseInt(document.getElementById("input-temperature").value),
+        DiscoveryDate: document.getElementById("input-date").value,
+        DiscoverySourceId: 1
     };
 }
 
 async function add(data) {
-    const response = await fetch(`${BASE_URL}${LIST_ITEMS}/CelestinForCreationDto`, {
+    const response = await fetch(`${BASE_URL}${LIST_ITEMS}/CreateCelestin`, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -205,15 +205,38 @@ async function add(data) {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-document.addEventListener("submit", function (e) {
+document.addEventListener("submit", async function (e) {
     e.preventDefault();
     const objId = getIdParam();
     const myObj = getObjectFromElements();
+
     if (objId) {
-        // handle update
-        alert(JSON.stringify(myObj));
+        // Handle update
+        const updateUrl = `${BASE_URL}${LIST_ITEMS}/${objId}`;
+        try {
+            const response = await fetch(updateUrl, {
+                method: "PATCH",  // Assuming PATCH method is used for updates
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(myObj),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update item');
+            }
+
+            // Optionally handle response or redirect after successful update
+            alert('Item updated successfully!');
+            // Redirect or update UI as needed
+
+        } catch (error) {
+            console.error('Error updating item:', error);
+            alert('Failed to update item');
+        }
+
     } else {
-        // handle add
-        add(myObj);
+        // Handle add (if necessary)
+        alert('No item ID found for update.');
     }
 });
