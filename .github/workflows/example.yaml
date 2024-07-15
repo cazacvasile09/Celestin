@@ -1,0 +1,14 @@
+name: Example CI/CD
+
+on: 
+    push:
+        branches: 
+            - 'cicd'
+jobs:
+    hello-world:
+            runs-on: ubuntu-latest
+            steps:
+            - run: |
+                pwd
+                echo "hello everyone"
+                ls -al
