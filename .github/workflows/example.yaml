@@ -10,5 +10,12 @@ jobs:
             steps:
             - run: |
                 pwd
-                echo "hello everyone"
+                echo "Here's what you get initally"
+                ls -al
+
+            - uses: actions/checkout@v4
+
+            - run: |
+                pwd
+                echo "This is what you get after a checkout"
                 ls -al
