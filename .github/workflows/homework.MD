@@ -27,6 +27,11 @@ Modify the Dockerfile accordingly and add a new step in the pipeline with the di
 
 > You can test your application locally, if you install docker and docker-compose. You'll have to dockerize the database as well.
 
+Credentials:
+
+* user: practicaendvsv
+* password: iNorzWtcMEuS88iDPlOgkw
+
 ### WSL + docker installation
 
 1. https://learn.microsoft.com/en-us/windows/wsl/install
