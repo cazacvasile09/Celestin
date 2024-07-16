@@ -6,11 +6,26 @@ After this short presentation, you should be able to create a small pipeline tha
 
 How to proceed: seems that you already have your own branches, so add the Dockerfile and .github/workflows/example.yaml **or** merge the **cicd** branch into yours.
 
+Save your progress first: 
+```
+Mandatory: git checkout <your-branch>
+
+git checkout -b <your-branch>-save
+
+git pull
+
+git checkout <your-branch>
+
+git merge cicd
+
+```
+
 ### CI/CD
 
 Build a pipeline that does the following tasks:
 * uses the application code
 * builds a Docker image with your app
+* login into docker hub
 * pushes the image to the DockerHub
 * **EXTRAPOINTS - try to not use the credentials in plain text**
 * **Even more extrapoints - if you wrote some type of test, you can test the application as well in the pipeline; *any attempt will be taken in consideration***
@@ -32,6 +47,9 @@ Credentials:
 * user: practicaendvsv
 * password: iNorzWtcMEuS88iDPlOgkw
 
+
+> have a look on google: how to hide credentials in github actions
+
 ### WSL + docker installation
 
 1. https://learn.microsoft.com/en-us/windows/wsl/install
@@ -39,3 +57,5 @@ Credentials:
 2. https://devblogs.microsoft.com/commandline/systemd-support-is-now-available-in-wsl/
 
 3. https://docs.docker.com/engine/install/
+
+> you can have a look on docker-compose as well
