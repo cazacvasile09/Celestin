@@ -24,7 +24,7 @@ jobs:
               run: docker --version
               
             - name: Build Dotnet App Image
-              run: docker build -t ${{ secrets.DOCKER_USERNAME }}/dotnet:latest .
+              run: docker build -t ${{ secrets.DOCKER_USERNAME }}/HladiucIonut .
 
             - name: Log in to Docker Hub
               uses: docker/login-action@v2
@@ -33,4 +33,4 @@ jobs:
                 password: ${{ secrets.DOCKER_PASSWORD }}
             
             - name: Push Docker Image to Docker Hub
-              run: docker push ${{ secrets.DOCKER_USERNAME }}/dotnet:latest
+              run: docker push ${{ secrets.DOCKER_USERNAME }}/HladiucIonut
