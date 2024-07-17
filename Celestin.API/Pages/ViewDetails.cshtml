@@ -26,20 +26,25 @@
             <input type="text" id="input-name" name="name">
         </div>
         <div>
-            <label for="input-mass">Mass:</label>
-            <input type="number" id="input-mass" name="mass">
+            <label for="input-mass">Mass: </label>
+          
+                <input type="number" id="input-mass" name="mass" style="display: inline-block; width: 300px;" min="1">
+                <label for="input-mass" style="display: inline-block; margin-left: 5px;">Kg</label>
         </div>
         <div>
             <label for="input-diameter">Equatorial Diameter:</label>
-            <input type="number" id="input-diameter" name="diameter">
+                <input type="number" id="input-diameter" name="diameter" style="display: inline-block; width: 300px" min="1">
+                <label for="input-diameter" style="display: inline-block; margin-left: 5px;">m</label>
+
         </div>
         <div>
             <label for="input-temperature">Surface temperature:</label>
-            <input type="text" id="input-temperature" name="input-temperature">
+                <input type="text" id="input-temperature" name="input-temperature" style="display: inline-block; width: 300px;">
+                <label for="input-temperature" style="display: inline-block; margin-left: 5px;">°K</label>
         </div>
         <div>
-            <label for="input-date">Discovery dute:</label>
-            <input type="text" id="input-date" name="input-date">
+            <label for="input-date">Discovery date:</label>
+            <input type="datetime-local" id="input-date" name="input-date">
         </div>
         <input type="submit" value="Submit" id='input-submit' >
     </form>

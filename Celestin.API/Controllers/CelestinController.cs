@@ -4,6 +4,8 @@ using Celestin.API.DbModels;
 using Celestin.API.Interfaces;
 using Celestin.API.Models.CelestinModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 using System;
 using System.Collections.Generic;
 
@@ -118,7 +120,7 @@ namespace Celestin.API.Controllers
             }
 
             var newCelestin = mapper.Map<DbModels.Celestin>(celestin);
-
+//return ModelState.AddModelError("Add succes", "Celestin added");
 
             celestinRepository.AddNewCelestin(newCelestin);
 
@@ -130,6 +132,7 @@ namespace Celestin.API.Controllers
                 "GetCelestin",
                 new { createdCelestin.Id },
                 createdCelestin);
+            
         }
 
         [Route("CelestinForUpdateDto")]

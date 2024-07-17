@@ -93,7 +93,7 @@ function getNewElement(type, attributes) {
 function generateTable(items) {
     const table = getNewElement('table');
     const headerRow = getNewElement('tr');
-    const headersCollumnsName = ['Name', 'Mass', 'Equatorial Diameter', 'Surface Temperture', 'Discovery Date', 'Actions'];
+    const headersCollumnsName = ['Name', 'Mass[kg]', 'Equatorial Diameter[m]', 'Surface Temperture[K]', 'Discovery Date', 'Actions'];
 
     headersCollumnsName.forEach(element => {
         const tableHeaderCell = getNewElement('th');
