@@ -1,5 +1,5 @@
 ﻿
-const BASE_URL = 'https://localhost:44335/api';
+const BASE_URL = 'https://localhost:44336/api';
 const LIST_ITEMS = '/celestin';
 
 const NAV_TITLE_LIST = "List";

@@ -1,11 +1,11 @@
-name: Example CI/CD
+name: Docker
 
 on: 
     push:
         branches: 
-            - 'cicd'
+            - 'robertFranciuc/Celestin'
 jobs:
-    hello-world:
+    docker-job:
             runs-on: ubuntu-latest
             steps:
             - run: |
@@ -19,3 +19,18 @@ jobs:
                 pwd
                 echo "This is what you get after a checkout"
                 ls -al
+
+            - name: Check Docker version
+              run: docker --version
+              
+            - name: Build Dotnet App Image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/celestin-api:1.0
+
+            - name: Log in to Docker Hub
+              uses: docker/login-action@v2
+              with:
+                username: ${{ secrets.DOCKER_USER }}
+                password: ${{ secrets.DOCKER_PASSWORD }}
+            
+            - name: Push Docker Image to Docker Hub
+              run: docker push ${{ secrets.DOCKER_USER }}//celestin-api:1.0
