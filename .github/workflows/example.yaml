@@ -1,0 +1,36 @@
+name: Docker
+
+on: 
+    push:
+        branches: 
+            - 'robertFranciuc/Celestin'
+jobs:
+    docker-job:
+            runs-on: ubuntu-latest
+            steps:
+            - run: |
+                pwd
+                echo "Here's what you get initally"
+                ls -al
+
+            - uses: actions/checkout@v4
+
+            - run: |
+                pwd
+                echo "This is what you get after a checkout"
+                ls -al
+
+            - name: Check Docker version
+              run: docker --version
+              
+            - name: Build Dotnet App Image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/celestin-build .
+
+            - name: Log in to Docker Hub
+              uses: docker/login-action@v2
+              with:
+                username: ${{ secrets.DOCKER_USER }}
+                password: ${{ secrets.DOCKER_PASSWORD }}
+            
+            - name: Push Docker Image to Docker Hub
+              run: docker push ${{ secrets.DOCKER_USER }}/celestin-build
